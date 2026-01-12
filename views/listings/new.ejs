@@ -1,0 +1,60 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add new listing</title>
+</head> -->
+<% layout("layouts/boilerplate") %>
+<body>
+    <form method="POST" action="/listings" class="needs-validation" novalidate>
+        <div class="row">
+        <div class="col-8 offset-2" >
+        <div class="mb-3 mt-2">
+            <label for="title" class="form-label">Title: </label>
+            <input type="text" class="form-control" id="title"name="listing[title]" placeholder="Enter a catchy title" required>
+        
+        <div class="valid-feedback">Looks Good!</div>
+        <div class="invalid-feedback">Please Enter a valid title</div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="description" class="form-label">Description: </label>
+            <textarea type="text" class="form-control" id="description"name="listing[description]"  rows="3" cols="20" placeholder="Type description" required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="image" class="form-label">Image link: </label>
+            <input type="text" class="form-control" id="image" name="listing[image]">
+        </div>
+        
+        <div class="row">
+            <div class="mb-3 col-md-4">
+                <label for="price" class="form-label">Price: </label>
+                <input type="text" class="form-control" id="price" name="listing[price]" placeholder="ex. 1200">
+        
+            </div>
+
+            <div class="mb-3 col-md-8">
+                <label for="country" class="form-label">Country: </label>
+                <input type="text"  class="form-control"id="country" name="listing[country]" placeholder="ex. India">
+        
+            </div>
+        </div>
+        
+        
+        <div class="mb-3">
+            <label for="location" class="form-label">Location: </label>
+            <input type="text" class="form-control" id="location" name="listing[location]" placeholder="ex. Delhi">
+        
+        </div>
+        
+         <br>         
+        <button class="btn btn-dark add-btn">Add</button>
+        <br><br>
+        </div>
+        </div>
+    </form>
+    
+</body>
+</html>
