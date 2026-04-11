@@ -12,10 +12,8 @@ let listingSchema= new Schema({
     description:String,
     image:
     {
-        type:String,
-        default:"https://images.unsplash.com/photo-1505843513577-22bb7d21e455?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80",
-        set:(v)=>
-            v===""?"https://images.unsplash.com/photo-1505843513577-22bb7d21e455?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80":v
+        filename:String,
+        url:String,
     },
     price:Number,
     location:String,
@@ -27,11 +25,22 @@ let listingSchema= new Schema({
     owner:{
         type:Schema.Types.ObjectId,
         ref:"User"
-    }
+    },
+    geometry:{
+        type: {
+        type: String,
+        enum: ['Point'],
+        required: true
+        },
+        coordinates: {
+        type: [Number], // [longitude, latitude]
+        required: true
+        }
+        }
 });
 
-//mongoose middleware that will run after executing "findOneAndDelete"/"findByIdAndDelete" command
-//and delete all the reviews of a listing after deleting the listing itself
+//mongoose middleware that will run after executing "findOneAndDelete"/"findByIdAndDelete" command on Listing model
+//and will delete all the reviews of a listing after deleting the listing itself
 listingSchema.post("findOneAndDelete",async(listing)=>{
     if(listing){
         await Review.deleteMany({_id:{$in:listing.reviews}});

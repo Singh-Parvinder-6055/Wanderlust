@@ -111,3 +111,10 @@ body{
 .show-btns{
     display:flex;
 }
+
+
+/* MapTiler styling */
+#map {
+        height:400px;
+        width:100vh;
+    }

@@ -8,7 +8,9 @@ const {isLoggedIn, isOwner}=require("../middleware.js");// to check the owner of
                                                         //to check if the user is logged-in
 const listingController=require("../Controller/listings.js");//to use the callbacks for listing route
 
-
+const multer=require("multer");
+const {storage}=require("../cloudConfig.js");
+const upload=multer({storage});
 
 
 //server side validation of newly created  listing using JOI 
@@ -31,9 +33,8 @@ const validateListing= (req,res,next)=>{
 //common route to see all listings and create new one
 router.route("/")
         .get(wrapAsync(listingController.index))   //to see all listings
-        .post(isLoggedIn,validateListing,wrapAsync(listingController.createListing)); //submit new listing on this route
-
-
+        .post(isLoggedIn,upload.single('listing[image]'),validateListing,wrapAsync(listingController.createListing)); //submit new listing on this route
+        
 
 //rendering a from to create  new listing
 //new route
@@ -43,7 +44,7 @@ router.get("/new",isLoggedIn,listingController.renderNewForm);
 //common route for show, update and destroy listing
 router.route("/:id")
          .get(wrapAsync(listingController.showListing))   //show route,to see a particular listing
-         .put(isLoggedIn,isOwner,validateListing,wrapAsync(listingController.updateListing))  //submit the edited listing on this route
+         .put(isLoggedIn,isOwner,upload.single('listing[image]'),validateListing,wrapAsync(listingController.updateListing))  //submit the edited listing on this route
          .delete(isLoggedIn,isOwner,wrapAsync(listingController.destroyListing));   //delete a listing
 
 

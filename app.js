@@ -14,6 +14,13 @@ const passport=require("passport");
 const LocalStrategy=require("passport-local");
 const usersRouter=require("./Routes/user.js")
 
+
+// if(process.env.NODE_ENV !="production"){
+    
+// }
+
+
+
 const sessionOptions={
     secret:"mySecret", //very weak secret
     resave:false,
@@ -29,7 +36,7 @@ app.use(session(sessionOptions));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate())); //this is used for authentication, If we don't use it user won't be authenticated during login
+passport.use(new LocalStrategy(User.authenticate())); //this is used for authentication, If we don't use it, user won't be authenticated during login
 passport.serializeUser(User.serializeUser()); //to store user's info in the session, this is automatically used by the passport
 passport.deserializeUser(User.deserializeUser());//to delete user's info from the session, this is automatically used by the passport 
 
@@ -50,7 +57,7 @@ app.set("views",path.join(__dirname,"views"));
 app.use(express.urlencoded({extended:true})); //to see the data sent in the body of request 
 app.use(express.json());
 app.use(methodOverride('_method'));//to use delete,put & patch methods using forms
-app.use(express.static(path.join(__dirname,"public")));
+app.use(express.static(path.join(__dirname,"public"))); //for sending css and javascript files to the client
 app.engine("ejs",ejsMate); //for using the boilerplate approach
 
 app.listen(8080,()=>{
@@ -63,9 +70,7 @@ app.listen(8080,()=>{
 
 Main().then(()=>{console.log("connected to database");}).catch(err=>{console.log(err);});
 
-app.get("/",(req,res)=>{
-    res.send("I am root");
-});
+
 
 //register a demo user 
 // app.get("/demouser",async(req,res)=>{

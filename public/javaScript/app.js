@@ -1,16 +1,16 @@
-const delBtn=document.querySelector(".del");
-document.addEventListener("DOMContentLoaded",()=>{
-    delBtn.addEventListener("click",(e)=>{
-        e.preventDefault();
-        const ok= confirm("Do you really want to delete this listing?");
-        if(ok){
-            let form=delBtn.closest("form");
-            if(form){
-                form.submit();
-            }
-        }
-    });
-});
+// const delBtn=document.querySelector(".del");
+// document.addEventListener("DOMContentLoaded",()=>{
+//     delBtn.addEventListener("click",(e)=>{
+//         e.preventDefault();
+//         const ok= confirm("Do you really want to delete this listing?");
+//         if(ok){
+//             let form=delBtn.closest("form");
+//             if(form){
+//                 form.submit();
+//             }
+//         }
+//     });
+// });
 
 
 // Example starter JavaScript for disabling form submissions if there are invalid fields

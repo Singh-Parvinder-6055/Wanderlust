@@ -1,5 +1,5 @@
 const Listing=require("../models/listing");
-
+const maptilerClient = require('@maptiler/client');
 
 
 module.exports.index=async(req,res)=> {
@@ -12,10 +12,24 @@ module.exports.renderNewForm=(req,res)=>{
 };
 
 module.exports.createListing=async(req,res,next)=>{
+       
+
+        // Set your API Key
+        maptilerClient.config.apiKey = process.env.MAP_TOKEN;
+
+        // Example of how to use it for Geocoding in your route:
+        const result = await maptilerClient.geocoding.forward(req.body.listing.location);
+        //console.log(result.features[0].geometry);
+        
 
         let newListing= new Listing(req.body.listing); 
+        let url=req.file.path;
+        let filename=req.file.filename;
+        newListing.image={filename,url};
         newListing.owner=req.user._id; 
-        await newListing.save();
+        newListing.geometry=result.features[0].geometry;
+        let savedListing= await newListing.save();
+        console.log(savedListing);
         req.flash("success","Listing Saved Successfully");//always put the flash message before the res.redirect
         res.redirect("listings");
         
@@ -46,7 +60,10 @@ module.exports.renderEditForm=async(req,res)=>{
         req.flash("error","Listing you requested for is not found");
         return res.redirect("/listings");
     }
-    res.render("listings/edit.ejs",{listing});
+    let originalImageUrl= listing.image.url;
+    originalImageUrl=originalImageUrl.replace("/upload", "/upload/c_fill,h_150,w_150");
+    
+    res.render("listings/edit.ejs",{listing,originalImageUrl});
 };
 
 
@@ -54,7 +71,15 @@ module.exports.updateListing=async(req,res)=>{
     //console.log("api worked");
     let{id}=req.params;  
     
-    await Listing.findByIdAndUpdate(id,{...req.body.listing},{runValidators:true});
+    let updatedListing= await Listing.findByIdAndUpdate(id,{...req.body.listing});
+    
+    if( typeof req.file!= "undefined"){        
+        let url=req.file.path;
+        let filename=req.file.filename;
+        updatedListing.image={filename,url};
+        await updatedListing.save();
+    }
+
     req.flash("success","Listing Updated Successfully");
     res.redirect(`/listings/${id}`);
 };
