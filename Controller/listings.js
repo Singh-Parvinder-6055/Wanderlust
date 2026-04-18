@@ -51,8 +51,26 @@ module.exports.showListing=async(req,res)=>{
     res.render("listings/show.ejs",{listing});
     
 };
+module.exports.searchByCategory=async(req,res)=>{
+    let {category}=req.query;
+    let allListings=await Listing.find({category:category});
+    if(!allListings.length){
+        req.flash("success","No listings found in this category");
+        return res.redirect("/listings");
+    }
+    res.render("listings/index.ejs",{allListings});
+};
 
+module.exports.findByLocation=async(req,res)=>{
+    let {location}=req.body;
+    let allListings=await Listing.find({location:location});
+    if(!allListings.length){
+        req.flash("success","No listings found at this location");
+        return res.redirect("/listings");
+    }
+    res.render("listings/index.ejs",{allListings});
 
+}
 module.exports.renderEditForm=async(req,res)=>{
     let{id}=req.params;
     let listing=await Listing.findById(id);

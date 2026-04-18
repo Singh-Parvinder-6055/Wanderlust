@@ -30,8 +30,8 @@
         
       </div>
       <div class="navbar-nav ms-auto">
-        <form class="d-flex " role="search">
-        <input class="form-control me-2 search-field"  type="search" placeholder="Search" aria-label="Search"/>
+        <form class="d-flex needs-validation" method="post" novalidate   action="/listings/findByLocation"  role="search">
+        <input class="form-control me-2 search-field" name="location" type="search" placeholder="Search Location" aria-label="Search" required/>
         <button class="btn btn-outline-success btn-search"  type="submit"><i class="fa-solid fa-magnifying-glass" id="search-logo"></i> Search </button>
       </form>
       </div>

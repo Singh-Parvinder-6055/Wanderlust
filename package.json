@@ -1,4 +1,6 @@
-{
+{"engines":{
+  "node":"20.19.0"
+},
   "name": "major_project",
   "version": "1.0.0",
   "description": "",
@@ -13,6 +15,7 @@
     "@maptiler/client": "^3.0.1",
     "@maptiler/sdk": "^3.11.1",
     "cloudinary": "^2.8.0",
+    "connect-mongo": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
@@ -22,6 +25,7 @@
     "express-session": "^1.18.2",
     "joi": "^18.0.2",
     "method-override": "^3.0.0",
+    "mongodb": "^7.1.1",
     "mongoose": "^9.0.0",
     "multer": "^2.0.2",
     "multer-storage-cloudinary": "^4.0.0",

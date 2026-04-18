@@ -8,21 +8,30 @@ const ExpressError=require("./utils/ExpressError.js");  //required custom Expres
 const listingsRouter=require("./Routes/listing.js");
 const reviewsRouter=require("./Routes/review.js");
 const session=require("express-session");
+const { default: MongoStore } = require('connect-mongo');
 const flash=require("connect-flash");
 const User=require("./models/user.js");
 const passport=require("passport");
 const LocalStrategy=require("passport-local");
 const usersRouter=require("./Routes/user.js")
+let db_Url=process.env.ATLAS_URL;
 
 
 // if(process.env.NODE_ENV !="production"){
     
 // }
 
-
+const store=MongoStore.create({
+    mongoUrl:db_Url,
+    crypto:{
+            secret:process.env.SECRET,
+        },
+   touchAfter: 24 * 3600 // time period in seconds
+  });
 
 const sessionOptions={
-    secret:"mySecret", //very weak secret
+    store,
+    secret:process.env.SECRET, //very weak secret
     resave:false,
     saveUninitialized:true,
     cookie:{
@@ -64,8 +73,10 @@ app.listen(8080,()=>{
     console.log("Listening on port 8080");
 });
 
+
+//let mongodb_local_Url='mongodb://127.0.0.1:27017/wanderlust';
  async function Main(){
-    await mongoose.connect('mongodb://127.0.0.1:27017/wanderlust');
+    await mongoose.connect(db_Url);
 }
 
 Main().then(()=>{console.log("connected to database");}).catch(err=>{console.log(err);});

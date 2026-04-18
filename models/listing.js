@@ -9,6 +9,10 @@ let listingSchema= new Schema({
         type:String,
         required:true
     },
+    category:{
+        type:String,
+        enum:["rooms","mountains","iconic city","castle","pool","camping","farms","arctic"]
+    },
     description:String,
     image:
     {
@@ -26,6 +30,7 @@ let listingSchema= new Schema({
         type:Schema.Types.ObjectId,
         ref:"User"
     },
+
     geometry:{
         type: {
         type: String,

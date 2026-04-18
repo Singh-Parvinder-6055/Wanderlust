@@ -32,13 +32,15 @@ const validateListing= (req,res,next)=>{
 
 //common route to see all listings and create new one
 router.route("/")
-        .get(wrapAsync(listingController.index))   //to see all listings
+        .get(wrapAsync(listingController.index))   //to see all listings        
         .post(isLoggedIn,upload.single('listing[image]'),validateListing,wrapAsync(listingController.createListing)); //submit new listing on this route
         
 
 //rendering a from to create  new listing
 //new route
 router.get("/new",isLoggedIn,listingController.renderNewForm);
+router.get("/category",wrapAsync(listingController.searchByCategory))//to see listings in a specific category)
+router.post("/findByLocation",wrapAsync(listingController.findByLocation));
 
 
 //common route for show, update and destroy listing

@@ -22,7 +22,21 @@
             <label for="description" class="form-label">Description: </label>
             <textarea type="text" class="form-control" id="description"name="listing[description]"  rows="3" cols="20" placeholder="Type description" required></textarea>
         </div>
-
+        <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <select id="category" class="form-select" aria-label="Default select example" name="listing[category]" required>
+                
+                <option value="iconic city">Iconic City <i class="fa-solid fa-city"></i></option>
+                <option value="mountains">Mountains</option>
+                <option value="rooms">Rooms <i class="fa-solid fa-bed"></i></option>
+                <option value="castle">Castle</option>
+                <option value="pool">Pool</option>
+                <option value="camping">Camping</option>
+                <option value="farms">Farms</option>
+                <option value="arctic">Arctic</option>
+                <option value="other" selected>Other</option>
+            </select>
+        </div>
         <!-- <div class="mb-3">
             <label for="image" class="form-label">Image link: </label>
             <input type="text" class="form-control" id="image" name="listing[image]">
