@@ -109,6 +109,10 @@ app.use("/",usersRouter);
 //     next(new ExpressError(404,"Page not found!"));
 // });
 
+app.use("/",(req,res,next)=>{
+    res.redirect("/listings");
+});
+
 //so here we have handled it using a middleware
 app.use((req,res,next)=>{
     next(new ExpressError(404,"Page not found!"));
